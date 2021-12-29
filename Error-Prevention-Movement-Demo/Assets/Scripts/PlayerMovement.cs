@@ -20,6 +20,12 @@ namespace Assets.Scripts
         [SerializeField] private float _gravityScale = -9.81f;
         [SerializeField] private Vector3 _playerVelocity;
 
+        [Header("Jump Buffer Variables")] 
+        [SerializeField] private float jumpBufferLength = 0.1f;
+        [SerializeField] private float _jumpBufferCount;
+
+        [Header("Camera Rotation Variables")]
+        [SerializeField] private float _rotationSpeed = 10f;
 
 
         // Start is called before the first frame update
@@ -27,6 +33,7 @@ namespace Assets.Scripts
         {
             _distToGround = GetComponent<CapsuleCollider>().bounds.extents.y;
             _characterControllerComponent = GetComponent<CharacterController>();
+            Cursor.visible = false;
         }
 
         void FixedUpdate()
@@ -37,14 +44,16 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
+            JumpBuffer();
+            ResetVelocity();
+            RotatePlayer();
             MovePlayer();
             ApplyJumpAndGravity();
-            ResetVelocity();
         }
 
         bool CheckGrounded()
         {
-            return Physics.Raycast(transform.position, -Vector3.up, _distToGround + 0.1f);
+            return Physics.Raycast(transform.position, -Vector3.up, _distToGround + 0.3f);
         }
 
         void MovePlayer()
@@ -57,7 +66,7 @@ namespace Assets.Scripts
             }
             else
             {
-                _moveVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+                _moveVector = new Vector3(Input.GetAxisRaw("Horizontal") /2, 0, Input.GetAxisRaw("Vertical")).normalized;
             }
 
 
@@ -67,9 +76,10 @@ namespace Assets.Scripts
 
         void ApplyJumpAndGravity()
         {
-            if (_playerVelocity.y < 1 && Input.GetButtonDown("Jump") && CheckGrounded())
+            if (_jumpBufferCount > 0 && _playerVelocity.y < 1 && CheckGrounded())
             {
                 _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityScale);
+                _jumpBufferCount = 0;
             }
 
             _playerVelocity.y += _gravityScale * Time.deltaTime;
@@ -86,6 +96,29 @@ namespace Assets.Scripts
             {
                 _playerVelocity.z = 0f;
             }
+        }
+
+        void RotatePlayer()
+        {
+            float horizontal = Input.GetAxisRaw("Mouse X") * _rotationSpeed;
+            transform.Rotate(0, horizontal, 0);
+        }
+
+        void JumpBuffer()
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                _jumpBufferCount = jumpBufferLength;
+            }
+            else
+            {
+                _jumpBufferCount -= Time.deltaTime;
+            }
+        }
+
+        void CoyoteJump()
+        {
+
         }
     }
 }
