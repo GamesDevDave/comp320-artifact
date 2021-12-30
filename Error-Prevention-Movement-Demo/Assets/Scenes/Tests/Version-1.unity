@@ -149,13 +149,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413208823}
-  m_LocalRotation: {x: 0.12557907, y: 0.69697595, z: -0.12519142, w: 0.6948249}
+  m_LocalRotation: {x: -0.17416432, y: 0.6864489, z: 0.17362687, w: 0.68433064}
   m_LocalPosition: {x: -4.46, y: 3.44, z: -0.17}
   m_LocalScale: {x: 3.540955, y: 1.3641, z: 5.1388373}
   m_Children: []
   m_Father: {fileID: 816511442}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 20.427, y: 90.189, z: 0.066}
+  m_LocalEulerAnglesHint: {x: -28.473, y: 90.201, z: -0.096}
 --- !u!65 &413208825
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -436,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 1376457048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.26, y: 1.5, z: 0}
-  m_LocalScale: {x: 2.8884382, y: 1.3641, z: 5.1388373}
+  m_LocalScale: {x: 2.8884382, y: 9.124056, z: 5.1388373}
   m_Children: []
   m_Father: {fileID: 816511442}
   m_RootOrder: 1
@@ -657,12 +657,15 @@ MonoBehaviour:
   _playerSpeed: 10
   _isGrounded: 0
   _distToGround: 0
+  _defaultStepOffset: 0
   _jumpHeight: 1.5
   _gravityScale: -30
   _playerVelocity: {x: 0, y: 0, z: 0}
   jumpBufferLength: 0.1
   _jumpBufferCount: 0
   _rotationSpeed: 10
+  _hangCounter: 0
+  _hangTime: 0.2
 --- !u!136 &1766874135
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -13,7 +14,8 @@ namespace Assets.Scripts
 
         [Header("Grounding Variables")]
         [SerializeField] private bool _isGrounded;
-        [SerializeField] private float _distToGround;
+        [SerializeField] private RaycastHit _hit;
+        [SerializeField] private float _defaultStepOffset;
 
         [Header("Jumping Variables")] 
         [SerializeField] private float _jumpHeight = 1.0f;
@@ -21,39 +23,36 @@ namespace Assets.Scripts
         [SerializeField] private Vector3 _playerVelocity;
 
         [Header("Jump Buffer Variables")] 
-        [SerializeField] private float jumpBufferLength = 0.1f;
+        [SerializeField] private float _jumpBufferLength = 0.1f;
         [SerializeField] private float _jumpBufferCount;
 
         [Header("Camera Rotation Variables")]
         [SerializeField] private float _rotationSpeed = 10f;
 
+        [Header("Coyote Jump Variables")]
+        [SerializeField] private float _hangCounter;
+        [SerializeField] private float _hangTime = 0.2f;
+
 
         // Start is called before the first frame update
         void Start()
         {
-            _distToGround = GetComponent<CapsuleCollider>().bounds.extents.y;
             _characterControllerComponent = GetComponent<CharacterController>();
+            _defaultStepOffset = _characterControllerComponent.stepOffset;
             Cursor.visible = false;
-        }
-
-        void FixedUpdate()
-        {
-            _isGrounded = CheckGrounded();
         }
 
         // Update is called once per frame
         void Update()
         {
+            _isGrounded = CheckGrounded();
             JumpBuffer();
+            CoyoteJump();
             ResetVelocity();
             RotatePlayer();
+            ResetStepOffset();
             MovePlayer();
             ApplyJumpAndGravity();
-        }
-
-        bool CheckGrounded()
-        {
-            return Physics.Raycast(transform.position, -Vector3.up, _distToGround + 0.3f);
         }
 
         void MovePlayer()
@@ -76,23 +75,28 @@ namespace Assets.Scripts
 
         void ApplyJumpAndGravity()
         {
-            if (_jumpBufferCount > 0 && _playerVelocity.y < 1 && CheckGrounded())
+            if (_jumpBufferCount > 0 && _playerVelocity.y < 1 && _hangCounter > 0f)
             {
+                _characterControllerComponent.stepOffset = 0f;
                 _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityScale);
                 _jumpBufferCount = 0;
             }
 
-            _playerVelocity.y += _gravityScale * Time.deltaTime;
+            if (!_isGrounded)
+            {
+                _playerVelocity.y += _gravityScale * Time.deltaTime;
+            }
+
             _characterControllerComponent.Move(_playerVelocity * Time.deltaTime);
         }
 
         void ResetVelocity()
         {
-            if (CheckGrounded() && _playerVelocity.y < 0)
+            if (_isGrounded && _playerVelocity.y < 1)
             {
                 _playerVelocity.y = 0f;
             }
-            if (CheckGrounded() && _playerVelocity.z > 0)
+            if (_isGrounded && _playerVelocity.z > 0)
             {
                 _playerVelocity.z = 0f;
             }
@@ -108,7 +112,7 @@ namespace Assets.Scripts
         {
             if (Input.GetButtonDown("Jump"))
             {
-                _jumpBufferCount = jumpBufferLength;
+                _jumpBufferCount = _jumpBufferLength;
             }
             else
             {
@@ -118,7 +122,27 @@ namespace Assets.Scripts
 
         void CoyoteJump()
         {
+            if (_isGrounded)
+            {
+                _hangCounter = _hangTime;
+            }
+            else
+            {
+                _hangCounter -= Time.deltaTime;
+            }
+        }
 
+        private void ResetStepOffset()
+        {
+            if (_isGrounded)
+            {
+                _characterControllerComponent.stepOffset = _defaultStepOffset;
+            }
+        }
+
+        bool CheckGrounded()
+        {
+            return _characterControllerComponent.isGrounded;
         }
     }
 }
