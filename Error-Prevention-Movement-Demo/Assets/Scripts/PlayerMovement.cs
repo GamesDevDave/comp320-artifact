@@ -23,7 +23,7 @@ namespace Assets.Scripts
         [SerializeField] private Vector3 _playerVelocity;
 
         [Header("Jump Buffer Variables")] 
-        [SerializeField] private float _jumpBufferLength = 0.1f;
+        [SerializeField] public float JumpBufferLength = 0.1f;
         [SerializeField] private float _jumpBufferCount;
 
         [Header("Camera Rotation Variables")]
@@ -31,7 +31,7 @@ namespace Assets.Scripts
 
         [Header("Coyote Jump Variables")]
         [SerializeField] private float _hangCounter;
-        [SerializeField] private float _hangTime = 0.2f;
+        [SerializeField] public float HangTime = 0.2f;
 
 
         // Start is called before the first frame update
@@ -112,7 +112,7 @@ namespace Assets.Scripts
         {
             if (Input.GetButtonDown("Jump"))
             {
-                _jumpBufferCount = _jumpBufferLength;
+                _jumpBufferCount = JumpBufferLength;
             }
             else
             {
@@ -124,7 +124,7 @@ namespace Assets.Scripts
         {
             if (_isGrounded)
             {
-                _hangCounter = _hangTime;
+                _hangCounter = HangTime;
             }
             else
             {

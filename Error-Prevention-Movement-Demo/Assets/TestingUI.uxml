@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="width: 259px; height: 18px; align-items: flex-start; justify-content: flex-start; left: 0; top: 0; display: flex; visibility: visible; background-color: rgba(70, 70, 70, 0); flex-direction: row; -unity-background-image-tint-color: rgba(255, 255, 255, 0);">
+        <ui:Label text="Coyote Time amount: " display-tooltip-when-elided="true" name="CoyoteTime" style="-unity-text-align: middle-left; align-items: auto; overflow: visible; white-space: nowrap; color: rgb(255, 255, 255);" />
+        <ui:Label text="CoyoteAmount" display-tooltip-when-elided="true" name="CoyoteTimeAmount" style="white-space: nowrap; -unity-text-align: middle-left; color: rgb(255, 255, 255);" />
+    </ui:VisualElement>
+    <ui:VisualElement style="width: 286px; height: 18px; align-items: flex-start; justify-content: flex-start; left: 0; top: 0; display: flex; visibility: visible; background-color: rgba(70, 70, 70, 0); flex-direction: row;">
+        <ui:Label text="Jump Buffer amount:" display-tooltip-when-elided="true" name="JumpBuffer" style="-unity-text-align: middle-left; align-items: auto; overflow: visible; white-space: nowrap; -unity-text-outline-color: rgb(14, 14, 14); background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" />
+        <ui:Label text="JumpBufferAmount" display-tooltip-when-elided="true" name="JumpBufferAmount" style="white-space: nowrap; -unity-text-align: middle-left; color: rgb(255, 255, 255);" />
+    </ui:VisualElement>
+    <ui:VisualElement style="width: 259px; height: 18px; align-items: flex-start; justify-content: flex-start; left: 0; top: 0; display: flex; visibility: visible; background-color: rgba(70, 70, 70, 0); flex-direction: row; -unity-background-image-tint-color: rgba(255, 255, 255, 0);">
+        <ui:Label text="Scene Name: " display-tooltip-when-elided="true" name="SceneName" style="-unity-text-align: middle-left; align-items: auto; overflow: visible; white-space: nowrap; color: rgb(255, 255, 255);" />
+        <ui:Label text="SceneNameValue" display-tooltip-when-elided="true" name="SceneNameValue" style="white-space: nowrap; -unity-text-align: middle-left; color: rgb(255, 255, 255);" />
+    </ui:VisualElement>
+</ui:UXML>
