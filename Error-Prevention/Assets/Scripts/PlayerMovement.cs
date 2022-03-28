@@ -37,7 +37,7 @@ namespace Assets.Scripts
         // Start is called before the first frame update
         void Start()
         {
-            _characterControllerComponent = GetComponent<CharacterController>();
+            _characterControllerComponent = GetComponent<CharacterController>(); // Get's reference to Unity character controller.
             _defaultStepOffset = _characterControllerComponent.stepOffset;
             Cursor.visible = false;
         }
@@ -54,7 +54,9 @@ namespace Assets.Scripts
             MovePlayer();
             ApplyJumpAndGravity();
         }
-
+        
+        // Simple player movement using WASD keys.
+        // Normalized to ensure player cannot have differing movement speed behaviour.
         void MovePlayer()
         {
             Debug.Log(_isGrounded);
@@ -73,6 +75,7 @@ namespace Assets.Scripts
             _characterControllerComponent.Move(_moveVector * Time.deltaTime * _playerSpeed);
         }
 
+        // Ensures that the jump buffer count and hang counter are in use when applying gravity.
         void ApplyJumpAndGravity()
         {
             if (_jumpBufferCount > 0 && _playerVelocity.y < 1 && _hangCounter > 0f)
@@ -90,6 +93,7 @@ namespace Assets.Scripts
             _characterControllerComponent.Move(_playerVelocity * Time.deltaTime);
         }
 
+
         void ResetVelocity()
         {
             if (_isGrounded && _playerVelocity.y < 1)
@@ -102,12 +106,14 @@ namespace Assets.Scripts
             }
         }
 
+        // Simply rotates the camera and the player.
         void RotatePlayer()
         {
             float horizontal = Input.GetAxisRaw("Mouse X") * _rotationSpeed;
             transform.Rotate(0, horizontal, 0);
         }
 
+        // Allows the player to jump whilst they aren't technically grounded.
         void JumpBuffer()
         {
             if (Input.GetButtonDown("Jump"))
@@ -120,6 +126,8 @@ namespace Assets.Scripts
             }
         }
 
+        // Reduces the coyote jump counter while the player jumps off of a ledge.
+        // If they're grounded the timer goes back to the number allocated.
         void CoyoteJump()
         {
             if (_isGrounded)
@@ -132,6 +140,7 @@ namespace Assets.Scripts
             }
         }
 
+        // Has a different step offset in the air to stop some glitchy steps on the floor.
         private void ResetStepOffset()
         {
             if (_isGrounded)
@@ -140,6 +149,7 @@ namespace Assets.Scripts
             }
         }
 
+        // Simple grounding checking function. Uses character controller.
         bool CheckGrounded()
         {
             return _characterControllerComponent.isGrounded;

@@ -5,13 +5,15 @@ using UnityEngine.UIElements;
 
 public class UIValuesNew : MonoBehaviour
 {
-
+    [Header("References")]
+    // References the label from the UI.
     private Label _sceneNameLabel;
-
-
-    [SerializeField]
+    
+    // References the player movement script. (Contains movement as well as buffer and coyote time.
+    [SerializeField] 
     private PlayerMovement _movementScript;
 
+    // Fill all the reference variables and initialise the UI.
     private void OnEnable()
     {
         _movementScript = _movementScript.GetComponent<PlayerMovement>();
@@ -23,6 +25,8 @@ public class UIValuesNew : MonoBehaviour
         SetValues();
     }
 
+    // Sets the UI element to have the current scenes name.
+    // Needed so the participant can fill out the questionnaire.
     private void SetValues()  
     {
         _sceneNameLabel.text = SceneManager.GetActiveScene().name;
