@@ -1,7 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Label text="If you find this version too difficult or frustrating there is a red cube on the floor, step on the cube to go to the next version." display-tooltip-when-elided="true" name="RedBox" style="white-space: nowrap; -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
-    <ui:VisualElement style="width: 259px; height: 18px; align-items: flex-start; justify-content: flex-start; left: 0; top: 0; display: flex; visibility: visible; background-color: rgba(70, 70, 70, 0); flex-direction: row; -unity-background-image-tint-color: rgba(255, 255, 255, 0);">
-        <ui:Label text="Scene Name: " display-tooltip-when-elided="true" name="SceneName" style="-unity-text-align: middle-left; align-items: auto; overflow: visible; white-space: nowrap; color: rgb(255, 255, 255);" />
-        <ui:Label text="SceneNameValue" display-tooltip-when-elided="true" name="SceneNameValue" style="white-space: nowrap; -unity-text-align: middle-left; color: rgb(255, 255, 255);" />
-    </ui:VisualElement>
-</ui:UXML>
